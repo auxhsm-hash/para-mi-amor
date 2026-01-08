@@ -1,0 +1,161 @@
+:root {
+    --gold: #D4AF37;
+    --dark: #0a0a0a;
+    --glass: rgba(255, 255, 255, 0.08);
+    --safe-top: env(safe-area-inset-top);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+body, html {
+    margin: 0; padding: 0; width: 100%; height: 100%;
+    background: #000; color: #fff; font-family: 'Inter', sans-serif;
+    overflow: hidden;
+}
+
+#app-container {
+    position: relative; width: 100%; max-width: 430px; height: 100dvh;
+    margin: 0 auto; overflow: hidden; display: flex; flex-direction: column;
+}
+
+.global-bg {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: url('../img/cover.jpg') center/cover no-repeat;
+    z-index: 1; transition: filter 0.6s ease;
+}
+
+.global-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.9));
+    z-index: 2;
+}
+
+#app-container.blur .global-bg { filter: blur(12px) scale(1.1); }
+
+/* PANTALLAS */
+.screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    display: none; flex-direction: column; z-index: 5;
+    padding-top: var(--safe-top);
+}
+.screen.active { display: flex; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* INTRO: EQUILIBRIO VERTICAL */
+.intro-content {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: space-evenly; align-items: center;
+    padding: 40px 20px; position: relative; z-index: 10;
+}
+
+.polaroid-frame {
+    background: #fff; padding: 10px 10px 30px 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8); transform: rotate(-2deg);
+}
+.polaroid-frame img { width: 240px; height: 300px; object-fit: cover; display: block; }
+
+.title { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--gold); margin: 0; text-align: center; }
+.subtitle { opacity: 0.8; font-weight: 300; text-align: center; }
+
+/* MENÚ */
+.app-header { padding: 40px 20px 20px; text-align: center; position: relative; z-index: 10; }
+.avatar-wrapper {
+    width: 100px; height: 100px; margin: 0 auto 15px;
+    border-radius: 50%; border: 2px solid var(--gold);
+    padding: 3px; box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+.avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+.menu-title { font-size: 1.5rem; margin: 0; }
+.music-toggle { position: absolute; top: 40px; right: 20px; font-size: 1.4rem; cursor: pointer; }
+
+.menu-list { padding: 10px 25px; z-index: 10; display: flex; flex-direction: column; gap: 15px; }
+.menu-card {
+    background: var(--glass); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    padding: 18px; display: flex; align-items: center; gap: 15px;
+}
+.card-icon { font-size: 1.6rem; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(212,175,55,0.1); border-radius: 50%; }
+.card-info h3 { margin: 0; font-size: 1.1rem; color: var(--gold); }
+.card-info p { margin: 2px 0 0; font-size: 0.85rem; opacity: 0.7; }
+
+/* CARTA */
+.scroll-content { flex: 1; overflow-y: auto; padding: 20px; z-index: 10; }
+.letter-paper { background: rgba(0,0,0,0.6); padding: 30px; border-radius: 25px; line-height: 1.8; }
+.type-txt { font-size: 1.05rem; white-space: pre-wrap; }
+
+/* RAZONES */
+.centered-content { flex: 1; display: flex; align-items: center; justify-content: center; padding: 30px; z-index: 10; }
+.reason-card {
+    background: var(--glass); border: 1px solid var(--gold);
+    padding: 40px 25px; border-radius: 30px; text-align: center;
+    backdrop-filter: blur(15px); width: 100%;
+}
+.sparkle { color: var(--gold); font-size: 2rem; margin-bottom: 15px; }
+#reason-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+.tap-hint { font-size: 0.8rem; color: var(--gold); margin-top: 20px; opacity: 0.6; }
+
+/* LABERINTO: EL ARREGLO CRÍTICO */
+.game-area {
+    flex: 1; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 20px; z-index: 10;
+}
+#maze-container {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Esto asegura que sea un cuadrado perfecto */
+    max-width: 350px;
+    background: #111; border: 2px solid var(--gold);
+    display: grid;
+}
+.cell { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.wall { background: #222; }
+.path { background: transparent; }
+
+.game-controls { margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.joy-row { display: flex; gap: 10px; }
+.joy-btn {
+    width: 65px; height: 55px; border-radius: 15px; border: none;
+    background: var(--glass); color: #fff; font-size: 1.2rem;
+    backdrop-filter: blur(5px);
+}
+.joy-btn:active { background: var(--gold); color: #000; }
+
+/* BOTONES PILL */
+.btn-pill {
+    background: linear-gradient(135deg, var(--gold), #b38f2d);
+    color: #000; border: none; padding: 16px 35px;
+    border-radius: 50px; font-weight: 700; font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer;
+}
+.btn-pill.small { padding: 12px 25px; font-size: 0.9rem; margin-top: 20px; }
+
+/* MODALES Y TICKET */
+.modal {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95); z-index: 100;
+    display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.modal.active { display: flex; }
+.modal-box { text-align: center; }
+.gift-anim { font-size: 4rem; animation: bounce 1s infinite; margin-bottom: 20px; }
+
+.ticket {
+    background: linear-gradient(135deg, #f9f295, #e0aa3e, #b8860b, #f9f295);
+    color: #000; border-radius: 15px; padding: 35px 20px;
+    width: 100%; max-width: 320px; text-align: center;
+    border: 2px dashed #000; box-shadow: 0 0 30px var(--gold);
+}
+.t-top { font-weight: 800; letter-spacing: 3px; }
+.t-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; margin: 15px 0; }
+.t-bot { border-top: 1px solid rgba(0,0,0,0.2); margin: 20px 0; padding-top: 10px; font-size: 0.8rem; font-weight: bold; }
+
+.top-nav { padding: 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+.btn-text { background: none; border: none; color: var(--gold); font-size: 1rem; font-weight: 600; }
+.status-pill { background: var(--glass); padding: 5px 15px; border-radius: 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; }
+
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+.video-frame { width: 100%; position: relative; }
+#main-video { width: 100%; border-radius: 15px; border: 2px solid var(--gold); }
+.btn-close { position: absolute; top: -45px; right: 0; color: #fff; background: none; border: none; font-size: 2rem; }
+.hidden { display: none; }
